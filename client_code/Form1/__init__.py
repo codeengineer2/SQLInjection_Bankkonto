@@ -12,7 +12,7 @@ class Form1(Form1Template):
     def handle_url_parameters(self):
         """Parse and validate URL query parameters."""
         # Get the current URL
-        url = anvil.js.window.location.href
+        self.url = anvil.js.window.location.href
         
         # Parse query parameters using JavaScript
         params = anvil.js.window.location.search

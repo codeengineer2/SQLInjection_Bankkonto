@@ -12,7 +12,7 @@ def login_insecure(username, password):
     try:
         with sqlite3.connect(db_path) as connection:
             cursor = connection.cursor()
-            
+
             query = f"""
                 SELECT Users.username, Balances.balance 
                 FROM Users 
@@ -33,7 +33,7 @@ def login_secure(username, password):
     try:
         with sqlite3.connect(db_path) as connection:
             cursor = connection.cursor()
-            
+
             query = """
                 SELECT Users.username, Balances.balance 
                 FROM Users 
@@ -46,5 +46,31 @@ def login_secure(username, password):
                 return f"Willkommen {user[0]}! Dein Kontostand beträgt {user[1]}€"
             else:
                 return "Login fehlgeschlagen!"
+    except Exception as e:
+        return f"Fehler: {str(e)}"
+
+@anvil.server.callable
+def get_all_balances():
+    try:
+        with sqlite3.connect(db_path) as connection:
+            cursor = connection.cursor()
+
+            query = """
+                SELECT AccountNo, balance 
+                FROM Balances
+            """
+            balances = cursor.execute(query).fetchall()
+
+            return balances
+    except Exception as e:
+        return f"Fehler: {str(e)}"
+@anvil.server.callable
+def get_account_balance_by_accountno(account_no):
+    try:
+        with sqlite3.connect(db_path) as connection:
+            cursor = connection.cursor()
+            query = "SELECT balance FROM Balances WHERE AccountNo = ?"
+            balance = cursor.execute(query, (account_no,)).fetchone()
+            return balance[0] if balance else "Kein Kontostand gefunden"
     except Exception as e:
         return f"Fehler: {str(e)}"

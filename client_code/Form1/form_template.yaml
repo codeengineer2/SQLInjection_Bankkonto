@@ -28,6 +28,10 @@ components:
   name: resulttext
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Heading
+- layout_properties: {grid_position: 'WXZHKR,EPNFIA'}
+  name: textbalances
+  properties: {bold: true}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
 container:
   properties: {col_widths: '{"YSEOYA":10,"RJTVCT":50,"UXICCV":10,"NIOGHG":50}'}
   type: ColumnPanel

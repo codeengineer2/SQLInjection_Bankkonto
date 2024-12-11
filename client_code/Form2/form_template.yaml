@@ -1,0 +1,7 @@
+components:
+- layout_properties: {grid_position: 'ZVJAHC,GXFWCW'}
+  name: text_1
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+container: {type: ColumnPanel}
+is_package: true

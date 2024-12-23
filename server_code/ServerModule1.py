@@ -2,7 +2,7 @@ import anvil.server
 import sqlite3
 import anvil.files
 from anvil.files import data_files
-
+import anvil.http
 db_path = data_files['database.db']
 
 @anvil.server.callable
@@ -121,3 +121,56 @@ def get_all_balances_insecure(account_no):
                 return "Keine Daten gefunden."
     except Exception as e:
         return f"Fehler: {str(e)}"
+@anvil.server.callable
+def check_account(account_no_input, pwd_input):
+  """
+  UNSICHERE Demo-Funktion zum Zeigen einer SQL-Injection-Schwachstelle.
+  account_no_input: Wert aus einem Textfeld in Form2 (z.B. "0 OR 1=1")
+  pwd_input: Wert aus einem Textfeld in Form2
+  """
+  # Verbindung zur bestehenden SQLite-Datenbank herstellen
+  conn = sqlite3.connect("database.db")
+  cursor = conn.cursor()
+  
+  # ACHTUNG: Hier wird bewusst ein unsicherer String zusammengebaut!
+  # SQL-Injection lässt grüßen ...
+  query = f"""
+    SELECT 
+      Users.AccountNo, 
+      Balances.balance 
+    FROM 
+      Users 
+    JOIN 
+      Balances 
+    ON 
+      Users.AccountNo = Balances.AccountNo
+    WHERE 
+      Users.AccountNo = {account_no_input}
+      AND Users.password = '{pwd_input}'
+  """
+  
+  print(f"Ausgeführte Query (unsicher!): {query}")
+
+  try:
+    cursor.execute(query)
+    result = cursor.fetchall()
+  except Exception as e:
+    return f"Fehler bei der Abfrage: {e}"
+  finally:
+    conn.close()
+  
+  if result:
+    # Falls Datensätze gefunden wurden, geben wir sie als String zurück
+    return f"Ergebnis: {result}"
+  else:
+    return "Keine passenden Einträge gefunden."
+
+
+
+@anvil.http.endpoint("/users", methods=["GET"])
+def get_users():
+  # Hier holen wir uns z.B. den query-Parameter 'AccountNo' ab
+  account_no_input = anvil.http.request.args.get('AccountNo', '')
+  pwd_input = anvil.http.request.args.get('pwd', '')
+  
+  return check_account(account_no_input, pwd_input)

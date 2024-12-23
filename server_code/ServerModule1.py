@@ -16,6 +16,7 @@ def login_insecure(username, password):
                 FROM Users 
                 JOIN Balances ON Users.AccountNo = Balances.AccountNo 
                 WHERE Users.username = '{username}' AND Users.password = '{password}'
+
             """
             user = cursor.execute(query).fetchone()
             
@@ -84,5 +85,39 @@ def get_account_balance_by_accountno(account_no):
                 return balance[0]
             else:
                 return "Kein Kontostand gefunden"
+    except Exception as e:
+        return f"Fehler: {str(e)}"
+
+@anvil.server.callable
+def get_all_balances_insecure(account_no):
+    """
+    Unsichere Abfrage, die den Parameter `account_no` direkt ins SQL-Statement
+    einsetzt und somit SQL-Injection erlaubt.
+    """
+    try:
+        with sqlite3.connect(db_path) as connection:
+            cursor = connection.cursor()
+
+            # Achtung: Unsicheres Statement!
+            # Hier wird account_no (z.B. "0 OR 1=1") unverändert eingebaut.
+            query = f"""
+                SELECT Users.username, Balances.balance
+                FROM Users
+                JOIN Balances ON Users.AccountNo = Balances.AccountNo
+                WHERE Users.AccountNo = {account_no}
+            """
+            # Wenn account_no = "0 OR 1=1", lautet die WHERE-Klausel:
+            #  WHERE Users.AccountNo = 0 OR 1=1
+            # => TRUE => Alle Zeilen werden zurückgegeben.
+
+            rows = cursor.execute(query).fetchall()
+
+            # rows könnte z.B. [(admin1, 5000), (frodo, 1500), (glorfindel, 7500)]
+            if rows:
+                usernames = [r[0] for r in rows]  # Liste aller Usernames
+                balances = [r[1] for r in rows]   # Liste aller Balances
+                return f"Willkommen {usernames}! Balances: {balances}"
+            else:
+                return "Keine Daten gefunden."
     except Exception as e:
         return f"Fehler: {str(e)}"

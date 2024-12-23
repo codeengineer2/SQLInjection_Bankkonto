@@ -16,11 +16,13 @@ components:
   name: text_box_2
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
-- layout_properties: {grid_position: 'PQTPUM,WDAWIE'}
+- event_bindings: {select: button_unsafe_select}
+  layout_properties: {grid_position: 'PQTPUM,WDAWIE'}
   name: button_unsafe
   properties: {text: unsafe}
   type: form:dep_lin1x4oec0ytd:_Components.RadioButton
-- layout_properties: {grid_position: 'KTSTOM,HXEHBI'}
+- event_bindings: {select: button_safe_select}
+  layout_properties: {grid_position: 'KTSTOM,HXEHBI'}
   name: button_safe
   properties: {text: safe}
   type: form:dep_lin1x4oec0ytd:_Components.RadioButton

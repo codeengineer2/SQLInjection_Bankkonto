@@ -1,6 +1,6 @@
 components:
 - layout_properties: {grid_position: 'ZVJAHC,GXFWCW'}
-  name: text_1
+  name: textbalances
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
 container: {type: ColumnPanel}

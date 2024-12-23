@@ -16,6 +16,7 @@ class Form1(Form1Template):
 
         if mode == "unsafe":
             result = anvil.server.call('login_insecure', username, password)
+            self.textbalances.text = "Das ist unsafe"
         else:  # mode == "safe"
             result = anvil.server.call('login_secure', username, password)
         
@@ -26,10 +27,10 @@ class Form1(Form1Template):
             self.label_status.text = result
 
     def button_unsafe_click(self, **event_args):
-        self.perform_login(mode="unsafe")
+        pass
 
     def button_safe_click(self, **event_args):
-        self.perform_login(mode="safe")
+        pass
 
     def text_box_2_pressed_enter(self, **event_args):
         """
@@ -37,4 +38,13 @@ class Form1(Form1Template):
         Hier kannst du ebenfalls entscheiden, ob du 'unsafe' oder 'safe' wählst.
         """
         # Beispiel: standardmäßig den sicheren Login nutzen
-        self.perform_login(mode="safe")
+        #self.perform_login(mode="safe")
+    pass
+
+    def button_unsafe_select(self, **event_args):
+      """This method is called when the radio button is selected."""
+      self.perform_login(mode="unsafe")
+
+    def button_safe_select(self, **event_args):
+      """This method is called when the radio button is selected."""
+      self.perform_login(mode="safe")

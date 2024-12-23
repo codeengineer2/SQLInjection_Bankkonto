@@ -6,12 +6,9 @@ from anvil.js.window import URLSearchParams
 
 class Form2(Form2Template):
     def __init__(self, **properties):
-        # Set Form properties and Data Bindings.
         
-        # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        # 1) Hash-Teil der URL abfragen
         full_hash_str = anvil.js.window.location.hash
         
         # Prüfen, ob überhaupt ein Hash existiert
@@ -19,8 +16,7 @@ class Form2(Form2Template):
             self.textbalances.text = "Es befindet sich kein Hash in der URL."
             return
         
-        # -> Normalerweise beginnt full_hash_str mit "#?"
-        # Beispiel: "#?AccountNo=1000"
+     
         # Prüfen, ob nach '#?' noch etwas folgt:
         if len(full_hash_str) <= 2:
             self.textbalances.text = "Keine Parameter nach '#?' gefunden."

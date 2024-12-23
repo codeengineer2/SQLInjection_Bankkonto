@@ -37,8 +37,7 @@ class Form1(Form1Template):
         Wird aufgerufen, sobald man im Passwort-Feld Enter drückt.
         Hier kannst du ebenfalls entscheiden, ob du 'unsafe' oder 'safe' wählst.
         """
-        # Beispiel: standardmäßig den sicheren Login nutzen
-        #self.perform_login(mode="safe")
+       
     pass
 
     def button_unsafe_select(self, **event_args):

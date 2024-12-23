@@ -34,6 +34,11 @@ components:
   name: textbalances
   properties: {bold: true}
   type: form:dep_lin1x4oec0ytd:_Components.Text
+- event_bindings: {click: button_1_click}
+  layout_properties: {grid_position: 'UFFOLH,GMZXMZ'}
+  name: button_1
+  properties: {text: Klicke für das anzeigen des Inhalts von Level 2}
+  type: form:dep_lin1x4oec0ytd:_Components.Button
 container:
   properties: {col_widths: '{"YSEOYA":10,"RJTVCT":50,"UXICCV":10,"NIOGHG":50}'}
   type: ColumnPanel

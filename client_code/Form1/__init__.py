@@ -16,14 +16,13 @@ class Form1(Form1Template):
 
         if mode == "unsafe":
             result = anvil.server.call('login_insecure', username, password)
-            self.textbalances.text = "Das ist unsafe"
         else:  # mode == "safe"
             result = anvil.server.call('login_secure', username, password)
         
         if result == "Eingeloggt!":
             self.label_status.text = result
-          
-            open_form('Form2')
+            self.textbalances.text = anvil.server.call('get_balance_by_username', username)         
+            
         else:
             self.label_status.text = result
 
@@ -49,3 +48,7 @@ class Form1(Form1Template):
     def button_safe_select(self, **event_args):
       """This method is called when the radio button is selected."""
       self.perform_login(mode="safe")
+
+    def button_1_click(self, **event_args):
+      """This method is called when the component is clicked."""
+      open_form('Form2')

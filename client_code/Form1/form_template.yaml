@@ -25,7 +25,7 @@ components:
   properties: {text: safe}
   type: form:dep_lin1x4oec0ytd:_Components.RadioButton
 - layout_properties: {grid_position: 'PDJDVZ,ASQNUI'}
-  name: resulttext
+  name: label_status
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Heading
 - layout_properties: {grid_position: 'WXZHKR,EPNFIA'}

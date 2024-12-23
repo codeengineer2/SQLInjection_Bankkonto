@@ -22,6 +22,7 @@ class Form1(Form1Template):
         
         if result == "Eingeloggt!":
             self.label_status.text = result
+          
             open_form('Form2')
         else:
             self.label_status.text = result

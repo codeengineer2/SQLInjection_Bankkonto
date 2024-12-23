@@ -3,6 +3,8 @@ import sqlite3
 import anvil.files
 from anvil.files import data_files
 import anvil.http
+import anvil.js
+
 db_path = data_files['database.db']
 
 @anvil.server.callable
@@ -74,3 +76,16 @@ def get_balance(account_no):
         return row[0]  # Der gefundene Kontostand
     else:
         return None
+
+
+@anvil.server.callable
+def loginaccountnum(url, full_hash_str, param_str, value):
+
+  db = sqlite3.connect(db_path)  # oder dein Pfad, falls anders
+  cursor = db.cursor()
+  # SELECT-Abfrage ausführen
+  row = cursor.execute("SELECT balance FROM Balances WHERE AccountNo = ?", (value)).fetchone()
+ # row = cursor.fetchone()
+  db.close()
+  return url + full_hash_str + param_str + value + row
+  
